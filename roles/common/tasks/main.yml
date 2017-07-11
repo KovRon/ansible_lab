@@ -17,12 +17,18 @@
   when: installation|success
   register: get_repo
 
+- name: check that .zshrc exists
+  stat:
+    path: '/root/.zshrc'
+  register: zshrc
+
 - name: create ~/.zshrc
   copy:
     src: '/root/.oh-my-zsh/templates/zshrc.zsh-template'
     dest: '/root/.zshrc'
     remote_src: true
   when: get_repo|success
+        and zshrc.stat.exists
 
 - name: change theme
   replace:
