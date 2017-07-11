@@ -3,7 +3,7 @@
 
 - name: install the latest version of zsh
   yum:
-    name: {{ item }}
+    name: "{{ item }}"
     state: latest
   register: installation
   with_items:
@@ -21,6 +21,7 @@
   copy:
     src: '/root/.oh-my-zsh/templates/zshrc.zsh-template'
     dest: '/root/.zshrc'
+    remote_src: true
   when: get_repo|success
 
 - name: change theme
@@ -28,13 +29,6 @@
     path: '/root/.zshrc'
     regexp: '^ZSH_THEME="robbyrussell"$'
     replace: 'ZSH_THEME="amuse"'
-    backup: yes
-
-- name: add plugins
-  replace:
-    path: '/root/.zshrc'
-    regexp: '^plugins=(git)$'
-    replace: 'plugins=(git systemd)'
     backup: yes
 
 - name: change shell for root
