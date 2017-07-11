@@ -3,9 +3,12 @@
 
 - name: install the latest version of zsh
   yum:
-    name: zsh
+    name: {{ item }}
     state: latest
   register: installation
+  with_items:
+    - zsh
+    - git
 
 - name: get oh-my-zsh repo
   git:
@@ -33,3 +36,8 @@
     regexp: '^plugins=(git)$'
     replace: 'plugins=(git systemd)'
     backup: yes
+
+- name: change shell for root
+  user:
+    name: root
+    shell: /bin/zsh
