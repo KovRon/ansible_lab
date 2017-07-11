@@ -1,0 +1,15 @@
+<VirtualHost *:{{ httpd_port }}>
+  ServerName   {{ server_name }}
+  ServerAlias  www.{{ server_name }}
+
+  DocumentRoot /var/www/{{ server_name }}
+
+  ErrorLog     /var/log/httpd/{{ server_name }}_error.log
+  CustomLog    /var/log/httpd/{{ server_name }}_access.log common
+
+  <Directory /var/www/{{ server_name }}>
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>

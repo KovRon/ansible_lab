@@ -1,0 +1,37 @@
+---
+# tasks file for common
+
+- name: install the latest version of zsh
+  yum:
+    name: zsh
+    state: latest
+  register: installation
+
+- name: get oh-my-zsh repo
+  git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh'
+    dest: '/root/.oh-my-zsh'
+  when: installation|success
+  register: get_repo
+  sudo: no
+
+- name: create ~/.zshrc
+  copy:
+    src:'/root/.oh-my-zsh/templates/zshrc.zsh-template'
+    dest:'/root/.zshrc'
+  when: get_repo|success
+  sudo: no
+
+- name: change theme
+  replace:
+    path: '/root/.zshrc'
+    regexp: '^ZSH_THEME="robbyrussell"$'
+    replace: 'ZSH_THEME="amuse"'
+    backup: yes
+
+- name: add plugins
+  replace:
+    path: '/root/.zshrc'
+    regexp: '^plugins=(git)$'
+    replace: 'plugins=(git systemd)'
+    backup: yes

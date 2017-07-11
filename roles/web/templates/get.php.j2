@@ -1,0 +1,29 @@
+<html>
+
+<head></head>
+
+<body>
+
+<?php
+// Create connection
+$conn = mysqli_connect({{ mysql_servername }}, {{ mysql_username }}, {{ mysql_password }});
+// Check connection
+if (!$conn) {
+    echo "ERROR: Can't connect to MySQL server." . PHP_EOL;
+    echo "Code error errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Text error error: " . mysqli_connect_error() . PHP_EOL;
+    exit;
+}
+
+echo "Connection to MySQL successful!" . PHP_EOL;
+echo "Host info: " . mysqli_get_host_info($conn) . PHP_EOL;
+
+mysqli_close($conn);
+
+?>
+
+<a href='index.html'>Back</a>
+
+</body>
+
+</html>

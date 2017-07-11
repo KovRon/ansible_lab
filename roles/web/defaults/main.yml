@@ -1,0 +1,12 @@
+---
+# defaults file for web
+
+base_packs:
+  - httpd
+  - php
+  - php-mysql
+  - libsemanage-python
+  - libselinux-python
+
+httpd_port: '80'
+server_name: 'ansible.test.epam.com'

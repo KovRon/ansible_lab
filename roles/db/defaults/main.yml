@@ -1,0 +1,10 @@
+---
+# defaults file for db
+
+mysql_packs:
+  - mysql-server
+  - MySQL-python
+  - libselinux-python
+  - libsemanage-python
+
+mysqld_port: 3306

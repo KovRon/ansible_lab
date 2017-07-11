@@ -11,21 +11,22 @@ Vagrant.configure("2") do |al|
       v.cpus = "1"
       v.memory = "512"
     end
-    ssh_pr_key = File.readlines("#{Dir.pwd}/id_rsa").first.strip
+    ssh_prv_key = File.read("#{Dir.pwd}/id_rsa")
     ansible.vm.provision "shell", inline: <<-SHELL
       rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
       yum update -y
       yum install -y ansible git
+      cd /root && git clone https://github.com/KovRon/ansible_lab.git
       echo '192.168.33.10 ansible\n192.168.33.11 web\n192.168.33.12 db' >> /etc/hosts
       mkdir -p /root/.ssh
-      echo #{ssh_pr_key} >> /root/.ssh/id_rsa
+      echo "#{ssh_prv_key}" > /root/.ssh/id_rsa
       chmod 700 /root/.ssh
       chmod 600 /root/.ssh/id_rsa
       chown root:root -R /root/.ssh
     SHELL
   end
 
-  al.vm.define "web", primary: true do |web|
+  al.vm.define "web" do |web|
     web.vm.box = "centos/7"
     web.vm.network "private_network", ip: "192.168.33.11"
     web.vm.provider "virtualbox" do |v|
@@ -44,7 +45,7 @@ Vagrant.configure("2") do |al|
     SHELL
   end
 
-  al.vm.define "db", primary: true do |db|
+  al.vm.define "db" do |db|
     db.vm.box = "centos/7"
     db.vm.network "private_network", ip: "192.168.33.12"
     db.vm.provider "virtualbox" do |v|

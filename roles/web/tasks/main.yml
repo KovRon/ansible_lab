@@ -1,0 +1,68 @@
+---
+# tasks file for web
+
+- name: Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: install packages
+  yum:
+  	name: {{ item }}
+  	state: latest
+  with_items:
+    - "{{ base_packs }}"
+
+- name: open httpd port
+  firewalld:
+    port: {{ httpd_port }}/tcp
+    zone: public
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: add site config
+  template:
+    src: templates/site.conf.j2
+    dest: /etc/httpd/conf.d/site.conf
+    mode: 0644
+
+- name: ensure content directory exists
+  file:
+    path: /var/www/{{ server_name }}
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+
+- name: copy content
+  copy:
+    src: files/{{ item }}
+    dest: /var/www/{{ server_name }}
+    owner: apache
+    group: apache
+    mode: 0644
+  with_items:
+    - epam_logo_2.jpg
+    - index.html
+
+- name: create php script
+  template:
+    src: templates/get.php.j2
+    dest: /var/www/{{ server_name }}
+    owner: apache
+    group: apache
+    mode: 0644
+
+- name: start and enable httpd service
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: allow httpd connect to remote database
+  seboolean:
+    name: httpd_can_network_connect_db
+    state: true
+    persistent: yes

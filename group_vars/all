@@ -1,0 +1,4 @@
+---
+mysql_servername: 'db'
+mysql_username: 'root'
+mysql_password: 'Pa$$w0rd'
