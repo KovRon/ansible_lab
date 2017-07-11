@@ -13,14 +13,12 @@
     dest: '/root/.oh-my-zsh'
   when: installation|success
   register: get_repo
-  sudo: no
 
 - name: create ~/.zshrc
   copy:
-    src:'/root/.oh-my-zsh/templates/zshrc.zsh-template'
-    dest:'/root/.zshrc'
+    src: '/root/.oh-my-zsh/templates/zshrc.zsh-template'
+    dest: '/root/.zshrc'
   when: get_repo|success
-  sudo: no
 
 - name: change theme
   replace:
