@@ -44,7 +44,7 @@
 
 - name: get temporary password
   shell: |
-    awk '/A temporary password is generated for/' /var/log/mysqld.log
+    awk '/A temporary password is generated for/' /var/log/mysqld.log |
     awk '{print $(NF)}'
   register: mysql_temp_pass
 
