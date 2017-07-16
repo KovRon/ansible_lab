@@ -20,6 +20,13 @@
 #   notify:
 #   - restart mysql
 
+- name: check if firewalld is running
+  service:
+    name: firewalld
+    state: started
+  check_mode: yes
+  register: firewalld_service_status
+
 - name: open mysqld port
   firewalld:
     port: "{{ mysqld_port }}/tcp"
@@ -27,16 +34,30 @@
     permanent: true
     immediate: true
     state: enabled
-  when: not (security_firewall is defined and not security_firewall)
+  when: firewalld_service_status.changed == false
 
 - name: start and enable mysql service
   systemd:
-    name: mysql
+    name: mysqld
     state: started
     enabled: yes
 
+- name: get temporary password
+  shell: |
+    awk '/A temporary password is generated for/' /var/log/mysqld.log
+    awk '{print $(NF)}'
+  register: mysql_temp_pass
+
+- name: change temporary root password
+  mysql_user:
+    login_password: "{{ mysql_temp_pass }}"
+    name: root
+    password: "{{ mysql_root_password }}"
+
 - name: create DB user
   mysql_user:
+    login_name: root
+    login_password: "{{ mysql_root_password }}"
     name: "{{ mysql_username }}"
     password: "{{ mysql_password }}"
     priv: '*.*:ALL'
