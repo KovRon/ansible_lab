@@ -27,8 +27,8 @@
     src: '/root/.oh-my-zsh/templates/zshrc.zsh-template'
     dest: '/root/.zshrc'
     remote_src: true
-  when: get_repo|success
-        and zshrc.stat.exists
+  when: (get_repo|success)
+        and (zshrc.stat.exists == False)
 
 - name: change theme
   replace:
