@@ -50,7 +50,7 @@
 
 - name: change temporary root password
   mysql_user:
-    login_password: "{{ mysql_temp_pass }}"
+    login_password: "{{ mysql_temp_pass.stdout_lines }}"
     name: root
     password: "{{ mysql_root_password }}"
 
