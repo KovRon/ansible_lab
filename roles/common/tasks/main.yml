@@ -28,7 +28,7 @@
     dest: '/root/.zshrc'
     remote_src: true
   when: (get_repo|success)
-        and (zshrc.stat.exists)
+        and (zshrc.stat.exists == False)
 
 - name: change theme
   replace:
