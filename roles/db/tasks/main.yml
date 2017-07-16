@@ -1,6 +1,12 @@
 ---
 # tasks file for db
 
+- name: Install the MySQL repo.
+  yum:
+    name: "{{ mysql_repo }}"
+    state: present
+  when: ansible_os_family == "RedHat"
+
 - name: Install Mysql package
   yum:
     name: "{{ item }}"
