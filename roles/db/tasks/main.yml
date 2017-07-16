@@ -1,12 +1,12 @@
 ---
 # tasks file for db
 
-- name: Install the MySQL repo.
+- name: install the MySQL repo.
   yum:
     name: "{{ mysql_repo }}"
     state: present
 
-- name: Install Mysql package
+- name: install Mysql packages
   yum:
     name: "{{ item }}"
     state: installed
@@ -27,6 +27,7 @@
     permanent: true
     immediate: true
     state: enabled
+  when: not (security_firewall is defined and not security_firewall)
 
 - name: start and enable mysql service
   systemd:
@@ -34,7 +35,7 @@
     state: started
     enabled: yes
 
-- name: Create Application DB User
+- name: create DB user
   mysql_user:
     name: "{{ mysql_username }}"
     password: "{{ mysql_password }}"
@@ -42,7 +43,7 @@
     host: '%'
     state: present
 
-- name: Configure SELinux to start mysql on any port
+- name: configure SELinux to start mysql on any port
   seboolean:
     name: mysql_connect_any
     state: true
