@@ -12,7 +12,7 @@
 
 - name: get oh-my-zsh repo
   git:
-    repo: 'https://github.com/robbyrussell/oh-my-zsh'
+    repo: "{{ zsh_repo }}"
     dest: '/root/.oh-my-zsh'
   when: installation|success
   register: get_repo

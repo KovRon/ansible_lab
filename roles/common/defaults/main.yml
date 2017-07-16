@@ -1,2 +1,4 @@
 ---
 # defaults file for common
+
+zsh_repo: 'https://github.com/robbyrussell/oh-my-zsh'
