@@ -2,7 +2,7 @@
 # defaults file for db
 
 mysql_packs:
-  - mysql-server
+  - mysql-community-server
   - MySQL-python
   - libselinux-python
   - libsemanage-python
