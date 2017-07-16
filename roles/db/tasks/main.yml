@@ -61,7 +61,7 @@
 
 - name: update .my.cnf file
   template:
-    src: template/my.cnf.j2
+    src: templates/my.cnf.j2
     dest: /root/.my.cnf
 
 - name: create DB user
