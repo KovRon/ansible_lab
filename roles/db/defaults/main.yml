@@ -9,4 +9,6 @@ mysql_packs:
 
 mysqld_port: 3306
 
-mysql_repo: "https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm"
+mysql_repo: 'https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm'
+
+mysql_log: '/var/log/mysqld.log'

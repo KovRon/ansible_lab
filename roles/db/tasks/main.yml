@@ -44,7 +44,7 @@
 
 - name: get temporary password
   shell: |
-    awk '/A temporary password is generated for/' /var/log/mysqld.log |
+    awk '/A temporary password is generated for/' "{{ mysql_log }}" |
     awk '{print $(NF)}'
   register: mysql_temp_pass
 
@@ -55,6 +55,14 @@
     -p"{{ mysql_temp_pass.stdout }}" \
     --connect-expired-password \
     -e 'ALTER USER 'root'@'localhost' IDENTIFIED BY "{{ mysql_root_password }}";'
+  register: mysql_password_changed
+  when: mysql_temp_pass.stdout != ''
+
+- name: clean mysql log
+  file:
+    path: "{{ mysql_log }}"
+    state: absent
+  when: mysql_password_changed.changed == True
 
 - name: create DB user
   mysql_user:
