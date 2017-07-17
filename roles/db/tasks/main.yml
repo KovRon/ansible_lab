@@ -48,23 +48,9 @@
     awk '{print $(NF)}'
   register: mysql_temp_pass
 
-# - name: create .my.cnf file
-#   template:
-#     src: templates/my.cnf.j2
-#     dest: /root/.my.cnf
-
 - name: change temporary root password
-  mysql_user:
-    login_user: root
-    login_password: "{{ mysql_temp_pass.stdout }}"
-    name: root
-    password: "{{ mysql_root_password }}"
-  register: root_pass_changed
-
-# - name: update .my.cnf file
-#   template:
-#     src: templates/my.cnf.j2
-#     dest: /root/.my.cnf
+  shell: |
+    /usr/bin/mysqladmin -u root -p"{{ mysql_temp_pass.stdout }}" password "{{ mysql_root_password }}"
 
 - name: create DB user
   mysql_user:
