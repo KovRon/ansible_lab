@@ -1,5 +1,5 @@
 ---
 mysql_servername: 'db'
 mysql_username: 'user'
-mysql_password: 'Pa$$w0rd'
-mysql_root_password: 'Pa$$w0rd'
+mysql_password: 'Pa$$w0rd123'
+mysql_root_password: 'Pa$$w0rd123'
