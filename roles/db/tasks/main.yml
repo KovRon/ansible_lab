@@ -50,8 +50,11 @@
 
 - name: change temporary root password
   shell: |
-    /usr/bin/mysql -u root -p"{{ mysql_temp_pass.stdout }}" -e \
-    'ALTER USER 'root'@'localhost' IDENTIFIED BY "{{ mysql_root_password }}";'
+    /usr/bin/mysql \
+    -u root \
+    -p"{{ mysql_temp_pass.stdout }}" \
+    --connect-expired-password \
+    -e 'ALTER USER 'root'@'localhost' IDENTIFIED BY "{{ mysql_root_password }}";'
 
 - name: create DB user
   mysql_user:
