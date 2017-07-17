@@ -1,3 +1,7 @@
 [client]
 user=root
+<<<<<<< HEAD
 password={% if (root_pass_changed is defined) and (root_pass_changed.changed == 'True') %}"{{ mysql_root_password }}"{% else %}"{{ mysql_temp_pass.stdout_lines }}"{% endif %}
+=======
+password={% if (root_pass_changed is defined) and (root_pass_changed.changed == 'True') %}"{{ mysql_root_password }}"{% else %}"{{ mysql_temp_pass.stdout_lines }}"{% endif %}
+>>>>>>> ca7eb11bc28674cea4b856457bbcae93fbc6c2e7
