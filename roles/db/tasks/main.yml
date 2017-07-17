@@ -56,7 +56,7 @@
 - name: change temporary root password
   mysql_user:
     login_user: root
-    login_password: "{{ mysql_temp_pass.stdout_line }}"
+    login_password: "{{ mysql_temp_pass.stdout }}"
     name: root
     password: "{{ mysql_root_password }}"
   register: root_pass_changed
