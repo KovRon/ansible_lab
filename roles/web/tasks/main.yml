@@ -58,7 +58,7 @@
 - name: create php script
   template:
     src: templates/get.php.j2
-    dest: "/var/www/{{ server_name }}"
+    dest: "/var/www/{{ server_name }}/get.php"
     owner: apache
     group: apache
     mode: 0644
