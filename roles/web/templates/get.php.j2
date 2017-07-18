@@ -5,8 +5,12 @@
 <body>
 
 <?php
+$servername = {{ mysql_servername }};
+$username = {{ mysql_username }};
+$password = {{ mysql_password }};
+
 // Create connection
-$conn = mysqli_connect({{ mysql_servername }}, {{ mysql_username }}, {{ mysql_password }});
+$conn = mysqli_connect($servername, $username, $password);
 // Check connection
 if (!$conn) {
     echo "ERROR: Can't connect to MySQL server." . PHP_EOL;
