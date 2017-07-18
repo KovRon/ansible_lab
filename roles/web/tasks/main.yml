@@ -14,6 +14,13 @@
   with_items:
     - "{{ base_packs }}"
 
+- name: check if firewalld is running
+  service:
+    name: firewalld
+    state: started
+  check_mode: yes
+  register: firewalld_service_status
+
 - name: open httpd port
   firewalld:
     port: "{{ httpd_port }}/tcp"
@@ -21,6 +28,7 @@
     permanent: true
     immediate: true
     state: enabled
+  when: firewalld_service_status.changed == false
 
 - name: add site config
   template:
