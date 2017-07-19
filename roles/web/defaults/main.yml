@@ -10,3 +10,5 @@ base_packs:
 
 httpd_port: '80'
 server_name: 'ansible.test.epam.com'
+
+epel_repo: 'https://download.fedoraproject.org/pub/epel'
