@@ -6,6 +6,7 @@ Vagrant.configure("2") do |al|
   al.vm.define "web" do |web|
     web.vm.box = "centos/7"
     web.vm.network "private_network", ip: "192.168.33.11"
+    web.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
     web.vm.provider "virtualbox" do |v|
       v.gui = false
       v.cpus = "1"
