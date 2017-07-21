@@ -1,18 +1,4 @@
 ---
-- hosts: all
-  gather_facts: no
-  become: true
-  roles:
-    - common
-
-- hosts: db
-  gather_facts: no
-  become: true
-  roles:
-    - db
-
-- hosts: web
-  gather_facts: no
-  become: true
-  roles:
-    - web
+- include: common.yml
+- include: db.yml
+- include: web.yml
