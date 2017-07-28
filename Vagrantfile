@@ -19,7 +19,6 @@ Vagrant.configure("2") do |al|
       echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
       chmod 700 /root/.ssh
       chmod 600 /root/.ssh/authorized_keys
-      chown root:root -R /root/.ssh
     SHELL
   end
 
@@ -38,7 +37,6 @@ Vagrant.configure("2") do |al|
       echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
       chmod 700 /root/.ssh
       chmod 600 /root/.ssh/authorized_keys
-      chown root:root -R /root/.ssh
     SHELL
   end
 
@@ -61,7 +59,6 @@ Vagrant.configure("2") do |al|
       echo "#{ssh_prv_key}" > /root/.ssh/id_rsa
       chmod 700 /root/.ssh
       chmod 600 /root/.ssh/id_rsa
-      chown root:root -R /root/.ssh
       sed -i.bak 's/#host_key_checking = False/host_key_checking = False/' /etc/ansible/ansible.cfg
       cd /root/ansible_lab && ansible-playbook -i hosts all.yml
     SHELL
